@@ -29,17 +29,19 @@ Step 6: Test the network for accuracy<br>
 Step 7: Plot the Input space and Hidden space of RBF NN for XOR classification.
 
 <H3>PROGRAM :</H3>
-
-
+<pre>
 import numpy as np
 import matplotlib.pyplot as plt
+
 def gaussian_rbf(x, landmark, gamma=1):
     return np.exp(-gamma * np.linalg.norm(x - landmark)**2)
+
 def end_to_end(X1, X2, ys, mu1, mu2):
     from_1 = [gaussian_rbf(np.array([X1[i], X2[i]]), mu1) for i in range(len(X1))]
     from_2 = [gaussian_rbf(np.array([X1[i], X2[i]]), mu2) for i in range(len(X1))]
 
     plt.figure(figsize=(13, 5))
+
     plt.subplot(1, 2, 1)
     plt.scatter((X1[0], X1[3]), (X2[0], X2[3]), label="Class_0")
     plt.scatter((X1[1], X1[2]), (X2[1], X2[2]), label="Class_1")
@@ -60,6 +62,7 @@ def end_to_end(X1, X2, ys, mu1, mu2):
     plt.ylabel(f"$mu2$: {(mu2)}", fontsize=15)
     plt.title("Transformed Inputs: Linearly Seperable", fontsize=15)
     plt.legend()
+
     A = []
     for i, j in zip(from_1, from_2):
         temp = []
@@ -74,27 +77,30 @@ def end_to_end(X1, X2, ys, mu1, mu2):
     print(ys)
     print(f"Weights: {W}")
     return W
+
 def predict_matrix(point, weights):
     gaussian_rbf_0 = gaussian_rbf(point, mu1)
     gaussian_rbf_1 = gaussian_rbf(point, mu2)
     A = np.array([gaussian_rbf_0, gaussian_rbf_1, 1])
     return np.round(A.dot(weights))
+
 x1 = np.array([0, 0, 1, 1])
 x2 = np.array([0, 1, 0, 1])
 ys = np.array([0, 1, 1, 0])
+
 mu1 = np.array([0, 1])
 mu2 = np.array([1, 0])
+
 w = end_to_end(x1, x2, ys, mu1, mu2)
+
 print(f"Input:{np.array([0, 0])}, Predicted: {predict_matrix(np.array([0, 0]), w)}")
 print(f"Input:{np.array([0, 1])}, Predicted: {predict_matrix(np.array([0, 1]), w)}")
 print(f"Input:{np.array([1, 0])}, Predicted: {predict_matrix(np.array([1, 0]), w)}")
 print(f"Input:{np.array([1, 1])}, Predicted: {predict_matrix(np.array([1, 1]), w)}")
-
-
+</pre>
 
 <H3>OUTPUT :</H3>
-<img width="1101" height="593" alt="image" src="https://github.com/user-attachments/assets/9713b11b-bb18-4956-b7e5-e06786146973" />
-
+<img width="1227" height="603" alt="image" src="https://github.com/user-attachments/assets/276570ee-9c36-48d4-8e51-56cb8a1df353" />
 
 <H3>Result :</H3>
 Thus , a Radial Basis Function Neural Network is implemented to classify XOR data.
